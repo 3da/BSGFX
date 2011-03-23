@@ -1,0 +1,8 @@
+BSGFX Readme
+==============================
+
+Graphical API based on OpenGL & SDL for making 2D graphics in 2 steps
+
+Look Demo/demo.cpp to overview it.
+
+Copyright (C) 2011 Alexey Adamenko
