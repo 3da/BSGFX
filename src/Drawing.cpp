@@ -33,7 +33,7 @@ void Drawing::Flush()
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void Drawing::Rect(int x, int y, int width, int height, ALIGNMENT flags, float rotation, const Texture *texture, const Rectangle *sourceRect)
+void Drawing::Rect(int x, int y, int width, int height, unsigned long flags, float rotation, const Texture *texture, const Rectangle *sourceRect)
 {
 
     bool usingSrcArea = false;
@@ -137,7 +137,7 @@ void Drawing::Rect(int x, int y, int width, int height, ALIGNMENT flags, float r
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Drawing::Sprite(int x, int y, Texture *texture, float scaleX, float scaleY, float rotation, ALIGNMENT flags, const Rectangle *sourceRect)
+void Drawing::Sprite(int x, int y, Texture *texture, float scaleX, float scaleY, float rotation, unsigned long flags, const Rectangle *sourceRect)
 {
 	if (!texture)
 		return;

@@ -9,7 +9,7 @@ namespace BSGFX
 {
 
 
-bool Initialize(IMAGE_TYPES useImageTypes)
+bool Initialize(unsigned long useImageTypes)
 {
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 	{

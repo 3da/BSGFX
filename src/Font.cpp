@@ -229,7 +229,7 @@ long Font::GetStringMetrics(unsigned int &oWidth, unsigned int &oHeight, const w
 
 
 long Font::DrawText(int x, int y, const wchar_t *text,
-                   ALIGNMENT flags, float scale, unsigned int wrapAreaWidth, unsigned long substrLength)
+                   unsigned long flags, float scale, unsigned int wrapAreaWidth, unsigned long substrLength)
 {
     // align vertically first when needed
     if ((flags & A_VERT_CENTER) || (flags & A_BOTTOM))
@@ -240,7 +240,7 @@ long Font::DrawText(int x, int y, const wchar_t *text,
             y -= totalHeight / 2;
         else if ((flags & A_BOTTOM) != 0)
             y -= totalHeight;
-        flags = (ALIGNMENT) (flags & (~(A_VERT_CENTER | A_BOTTOM))); // mask away vertical align flags
+        flags &= ~(A_VERT_CENTER | A_BOTTOM); // mask away vertical align flags
 	 }
 
     StringRowParser srp(this, text, scale, wrapAreaWidth, substrLength);
@@ -682,7 +682,7 @@ unsigned int Font::GetStringWidth(const wchar_t *string, float scale, unsigned l
 }
 
 
-int Font::DrawString(int x, int y, const wchar_t *string, ALIGNMENT flags, float scale, unsigned long substrLength)
+int Font::DrawString(int x, int y, const wchar_t *string, unsigned long flags, float scale, unsigned long substrLength)
 {
     long a, last = -1, lastIdx = -1, maxLength = substrLength ? (long)substrLength : 0x7fffffff;
     Rectangle rect;

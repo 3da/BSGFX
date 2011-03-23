@@ -19,7 +19,7 @@ namespace BSGFX
 
 	};
 
-	bool Initialize(IMAGE_TYPES useImageTypes);
+	bool Initialize(unsigned long useImageTypes);
 
 
 
