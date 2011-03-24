@@ -158,16 +158,16 @@ void Drawing::Sprite(int x, int y, Texture *texture, float scaleX, float scaleY,
 
 }
 
-void Drawing::CircleFilled(int x, int y, int radius, Texture *texture)
+void Drawing::CircleFilled(int x, int y, int radius/*, Texture *texture*/)
 {
-	if (texture)
-		glBindTexture(GL_TEXTURE_2D, texture->GetIndex());
+	//if (texture)
+	//	glBindTexture(GL_TEXTURE_2D, texture->GetIndex());
 	glPushMatrix();
 	glTranslatef(x, y, 0);
 	glScalef(radius, radius, 1);
 	glCallList(circleList[0]);
 	glPopMatrix();
-	glBindTexture(GL_TEXTURE_2D, 0);
+	//glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void Drawing::InitializeCircle(unsigned int segments)
@@ -182,9 +182,11 @@ void Drawing::InitializeCircle(unsigned int segments)
 	glVertex2d(0,0);
 	for(double rad = 0; rad < M_PI*2; rad+=diff)
 	{
-		double xOff = sin(rad);
-		double yOff = cos(rad);
-		glTexCoord2f((xOff+1)/2, (yOff+1)/2);
+		double xOff = cos(rad);
+		double yOff = sin(rad);
+		double xCoord = (xOff+1.0)/2.0;
+		double yCoord = (yOff+1.0)/2.0;
+		glTexCoord2f(xCoord, yCoord);
 		glVertex2d(xOff, yOff);
 
 	}

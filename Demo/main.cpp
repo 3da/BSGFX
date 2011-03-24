@@ -16,12 +16,12 @@ int main(int argc, char *argv[])
 	BSGFX::Initialize(BSGFX::IT_PNG);
 
 	BSGFX::Screen::Initialize(640, 480, 32, false, "window");
-	BSGFX::Drawing::InitializeCircle(8);
+	BSGFX::Drawing::InitializeCircle(4);
 
 	BSGFX::Texture txt;
 	txt.Load("Plane1.png");
 	BSGFX::Drawing::Color(1,1,1,1);
-	BSGFX::Drawing::ClearColor(0, 0, 0);
+	BSGFX::Drawing::ClearColor(1, 1, 1);
 
 	BSGFX::Font font("font.fnt");
 	if (!font.Init())
@@ -57,7 +57,11 @@ int main(int argc, char *argv[])
 		//BSGFX::Drawing::Sprite(320, 240, &txt[1], 1, 1, M_PI/2, BSGFX::A_CENTER, &rect);
 		//BSGFX::Drawing::Color(1,0,0);
 		font.DrawText(630,470, L"Работает? Или же нет? :)", BSGFX::A_BOTTOM_RIGHT, 2, 300);
-		BSGFX::Drawing::CircleFilled(100,100, 100, &txt);
+		BSGFX::Drawing::Color(1,0,0);
+		BSGFX::Drawing::CircleFilled(100,100, 100);
+		BSGFX::Drawing::Color(1,1,1);
+		BSGFX::Drawing::CircleFilled(100,100, 100);
+
 
 	/*glPushMatrix();
 	glTranslatef(100,100,0);
