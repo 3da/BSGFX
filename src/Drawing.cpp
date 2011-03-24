@@ -7,6 +7,9 @@
 namespace BSGFX
 {
 
+unsigned long Drawing::circleList[2];
+
+
 void Drawing::Line(int x1, int y1, int x2, int y2, float width)
 {
 	glLineWidth(width);
@@ -155,6 +158,50 @@ void Drawing::Sprite(int x, int y, Texture *texture, float scaleX, float scaleY,
 
 }
 
+void Drawing::CircleFilled(int x, int y, int radius, Texture *texture)
+{
+	if (texture)
+		glBindTexture(GL_TEXTURE_2D, texture->GetIndex());
+	glPushMatrix();
+	glTranslatef(x, y, 0);
+	glScalef(radius, radius, 1);
+	glCallList(circleList[0]);
+	glPopMatrix();
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Drawing::InitializeCircle(unsigned int segments)
+{
+	Drawing::circleList[0] = glGenLists(1);
+	Drawing::circleList[1] = glGenLists(1);
+	double diff = M_PI*2.0f/(double)segments;
+
+	glNewList(circleList[0], GL_COMPILE);
+	glBegin(GL_TRIANGLE_FAN);
+	glTexCoord2f(0.5,0.5);
+	glVertex2d(0,0);
+	for(double rad = 0; rad < M_PI*2; rad+=diff)
+	{
+		double xOff = sin(rad);
+		double yOff = cos(rad);
+		glTexCoord2f((xOff+1)/2, (yOff+1)/2);
+		glVertex2d(xOff, yOff);
+
+	}
+	glTexCoord2f(1,0);
+	glVertex2d(1,0);
+	glEnd();
+	glEndList();
+
+	glNewList(circleList[1], GL_COMPILE);
+	glBegin(GL_LINE_STRIP);
+	for(double rad = 0; rad < M_PI*2; rad+=diff)
+	{
+		glVertex2d(sin(rad), cos(rad));
+	}
+	glEnd();
+	glEndList();
+}
 
 
 
