@@ -31,9 +31,10 @@ struct PixelRectangle
 class Texture
 {
 public:
+	Texture(const char *fileName);
+	Texture(const char *data, unsigned size);
 
-	bool Load(const char *fileName);
-	bool Load(const char *data, unsigned int size);
+	bool IsLoaded() const {return loaded;}
 
 	void Create(unsigned int width, unsigned int height, unsigned int index, float uv[]);
 
@@ -57,6 +58,8 @@ protected:
 	unsigned int height;
 
 	float uv[4];
+
+	bool loaded;
 
 
 

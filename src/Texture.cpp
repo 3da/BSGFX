@@ -281,21 +281,27 @@ static bool LoadImage(Texture *txt, SDL_RWops *source, bool deleteSource)
     return true;
 }
 
-bool Texture::Load(const char *fileName)
+Texture::Texture(const char *fileName)
 {
     SDL_RWops *rw = SDL_RWFromFile(fileName, "rb");
     if (rw == 0)
-        return false;
+	{
+		loaded = false;
+        return;
+	}
 
-    return LoadImage(this, rw, true);
+    loaded = LoadImage(this, rw, true);
 }
 
-bool Texture::Load(const char *data, unsigned int size)
+Texture::Texture(const char *data, unsigned int size)
 {
 	SDL_RWops *rw = SDL_RWFromMem((void*)data, size);
-	if (rw == 0)
-		return false;
-	return LoadImage(this, rw, true);
+    if (rw == 0)
+	{
+		loaded = false;
+        return;
+	}
+	loaded = LoadImage(this, rw, true);
 
 }
 
