@@ -170,6 +170,17 @@ void Drawing::CircleFilled(int x, int y, int radius/*, Texture *texture*/)
 	//glBindTexture(GL_TEXTURE_2D, 0);
 }
 
+void Drawing::Circle(int x, int y, int radius, float width)
+{
+	glLineWidth(width);
+	glPushMatrix();
+	glTranslatef(x, y, 0);
+	glScalef(radius, radius, 1);
+	glCallList(circleList[1]);
+	glPopMatrix();
+}
+
+
 void Drawing::InitializeCircle(unsigned int segments)
 {
 	Drawing::circleList[0] = glGenLists(1);
