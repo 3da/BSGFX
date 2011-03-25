@@ -235,6 +235,7 @@ void Drawing::InitializeCircle(unsigned int segments)
 		glVertex2d(sin(rad), cos(rad));
 	}
 	glEnd();
+	glVertex2d(1,0);
 	glEndList();
 }
 
