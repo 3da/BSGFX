@@ -3,11 +3,17 @@
 #include <cmath>
 
 #include "Drawing.h"
+#include "Videomode.h"
+#include "Screen.h"
+
+#include "bin/spriteLogo.h"
 
 namespace BSGFX
 {
 
 unsigned long Drawing::circleList[2];
+
+Texture *Drawing::spriteLogo = 0;
 
 
 void Drawing::Line(int x1, int y1, int x2, int y2, float width)
@@ -155,6 +161,22 @@ void Drawing::Sprite(int x, int y, Texture *texture, float scaleX, float scaleY,
 		rect.height = texture->GetHeight();
 	}
 	Rect(x, y, rect.width*scaleX, rect.height*scaleY, flags, rotation, texture, &rect);
+
+}
+
+void Drawing::Sprite()
+{
+	if (!spriteLogo)
+	{
+		spriteLogo = new Texture((char*)SPRITE_LOGO, SPRITE_LOGO_LEN);
+		if (!spriteLogo->IsLoaded())
+		{
+			spriteLogo = 0;
+			return;
+		}
+	}
+	Videomode mode = Screen::GetVideomode();
+	Rect(0,0,mode.GetWidth(), mode.GetHeight(), A_TOP_LEFT, 0, spriteLogo);
 
 }
 
