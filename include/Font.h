@@ -150,7 +150,7 @@ public:
 	unsigned int GetStringWidth(const wchar_t *string, float scale, unsigned long substrLength = 0);
 
 	int DrawString(int x, int y, const wchar_t *string,
-					 unsigned long flags = A_TOP_LEFT, float scale = 1, unsigned long substrLength = 0);
+				   unsigned long flags = A_TOP_LEFT, float scale = 1, unsigned long substrLength = 0);
 
 	// Local:
 

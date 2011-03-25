@@ -41,11 +41,11 @@ bool Initialize(unsigned long useImageTypes)
 
 
 
-    //glLineWidth(2);
+	//glLineWidth(2);
 
-    // This allows alpha blending of 2D textures with the scene.
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	// This allows alpha blending of 2D textures with the scene.
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	return true;
 }

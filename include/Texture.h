@@ -34,7 +34,9 @@ public:
 	Texture(const char *fileName);
 	Texture(const char *data, unsigned size);
 
-	bool IsLoaded() const {return loaded;}
+	bool IsLoaded() const {
+		return loaded;
+	}
 
 	void Create(unsigned int width, unsigned int height, unsigned int index, float uv[]);
 

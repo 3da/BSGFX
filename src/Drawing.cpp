@@ -45,7 +45,7 @@ void Drawing::Flush()
 void Drawing::Rect(int x, int y, int width, int height, unsigned long flags, float rotation, const Texture *texture, const Rectangle *sourceRect)
 {
 
-    bool usingSrcArea = false;
+	bool usingSrcArea = false;
 	Rectangle srcArea;
 	if (texture)
 	{
@@ -61,7 +61,7 @@ void Drawing::Rect(int x, int y, int width, int height, unsigned long flags, flo
 
 	glPushAttrib(GL_COLOR_BUFFER_BIT);
 
-	float uv[4]={0};
+	float uv[4]= {0};
 
 	if (texture)
 	{
@@ -82,17 +82,17 @@ void Drawing::Rect(int x, int y, int width, int height, unsigned long flags, flo
 	}
 
 	float halfWidth = width*0.5f, halfHeight = height*0.5f;
-    if (usingSrcArea)
-    {
-        float uvW = uv[2] - uv[0];
-        float uvH = uv[3] - uv[1];
-        uv[0] += uvW * srcArea.x / texture->GetWidth();
-        uv[1] += uvH * srcArea.y / texture->GetHeight();
-        uv[2] = uv[0] + uvW * srcArea.width / texture->GetWidth();
-        uv[3] = uv[1] + uvH * srcArea.height / texture->GetHeight();
-        //halfWidth = srcArea.width * 0.5f;
-        //halfHeight = srcArea.height * 0.5f;
-    }
+	if (usingSrcArea)
+	{
+		float uvW = uv[2] - uv[0];
+		float uvH = uv[3] - uv[1];
+		uv[0] += uvW * srcArea.x / texture->GetWidth();
+		uv[1] += uvH * srcArea.y / texture->GetHeight();
+		uv[2] = uv[0] + uvW * srcArea.width / texture->GetWidth();
+		uv[3] = uv[1] + uvH * srcArea.height / texture->GetHeight();
+		//halfWidth = srcArea.width * 0.5f;
+		//halfHeight = srcArea.height * 0.5f;
+	}
 
 	float pivotX = -halfWidth, pivotY = -halfHeight; // transform center adjusted to top-left (default)
 	if (flags & A_RIGHT)

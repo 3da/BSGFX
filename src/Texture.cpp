@@ -11,88 +11,88 @@ namespace BSGFX
 
 static void sSimpleFixAlphaChannel(SDL_Surface *image, const SDL_Rect &srcr)
 {
-    if (image->w < 2 || image->h < 2)
-        return;
+	if (image->w < 2 || image->h < 2)
+		return;
 
-    if (SDL_LockSurface(image) != 0)
-        return;
+	if (SDL_LockSurface(image) != 0)
+		return;
 
-    Uint32 *pixels = (Uint32 *)image->pixels;
-    long x, y;
-    long w = image->w, h = image->h;
-    const unsigned long alphaMask = image->format->Amask;
-    const unsigned long colorMask =
-        image->format->Rmask | image->format->Gmask | image->format->Bmask;
+	Uint32 *pixels = (Uint32 *)image->pixels;
+	long x, y;
+	long w = image->w, h = image->h;
+	const unsigned long alphaMask = image->format->Amask;
+	const unsigned long colorMask =
+		image->format->Rmask | image->format->Gmask | image->format->Bmask;
 
-    long co = 0;
-    for (y = 0; y < h; ++y)
-    {
-        for (x = 0; x < w; ++x)
-        {
-            if ((pixels[co] & alphaMask) == 0)
-            {
-                // iterate through 3x3 window around pixel
-                long left = x - 1, right = x + 1, top = y - 1, bottom = y + 1;
-                if (left < 0) left = 0;
-                if (right >= w) right = w - 1;
-                if (top < 0) top = 0;
-                if (bottom >= h) bottom = h - 1;
-                long x2, y2, colors = 0, co2 = top * w + left;
-                long red = 0, green = 0, blue = 0;
-                for (y2 = top; y2 <= bottom; ++y2)
-                {
-                    for (x2 = left; x2 <= right; ++x2)
-                    {
-                        Uint32 px = pixels[co2++];
-                        if (px & alphaMask)
-                        {
-                            red += (px & image->format->Rmask) >> image->format->Rshift;
-                            green += (px & image->format->Gmask) >> image->format->Gshift;
-                            blue += (px & image->format->Bmask) >> image->format->Bshift;
-                            ++colors;
-                        }
-                    }
-                    co2 += w - (right - left + 1);
-                }
-                if (colors > 0)
-                {
-                    pixels[co] &= alphaMask;
-                    pixels[co] |= (red / colors) << image->format->Rshift;
-                    pixels[co] |= (green / colors) << image->format->Gshift;
-                    pixels[co] |= (blue / colors) << image->format->Bshift;
-                }
-            }
-            ++co;
-        }
-    }
+	long co = 0;
+	for (y = 0; y < h; ++y)
+	{
+		for (x = 0; x < w; ++x)
+		{
+			if ((pixels[co] & alphaMask) == 0)
+			{
+				// iterate through 3x3 window around pixel
+				long left = x - 1, right = x + 1, top = y - 1, bottom = y + 1;
+				if (left < 0) left = 0;
+				if (right >= w) right = w - 1;
+				if (top < 0) top = 0;
+				if (bottom >= h) bottom = h - 1;
+				long x2, y2, colors = 0, co2 = top * w + left;
+				long red = 0, green = 0, blue = 0;
+				for (y2 = top; y2 <= bottom; ++y2)
+				{
+					for (x2 = left; x2 <= right; ++x2)
+					{
+						Uint32 px = pixels[co2++];
+						if (px & alphaMask)
+						{
+							red += (px & image->format->Rmask) >> image->format->Rshift;
+							green += (px & image->format->Gmask) >> image->format->Gshift;
+							blue += (px & image->format->Bmask) >> image->format->Bshift;
+							++colors;
+						}
+					}
+					co2 += w - (right - left + 1);
+				}
+				if (colors > 0)
+				{
+					pixels[co] &= alphaMask;
+					pixels[co] |= (red / colors) << image->format->Rshift;
+					pixels[co] |= (green / colors) << image->format->Gshift;
+					pixels[co] |= (blue / colors) << image->format->Bshift;
+				}
+			}
+			++co;
+		}
+	}
 
-    // if rect is smaller than texture, copy rightmost/bottom col/row (and pixel at w,h)
-    // as is from the inner one so that linear sampling works like clamp_to_edge
-    if (srcr.w < image->w)
-    {
-        for (y = 0; y < srcr.h; ++y)
-            pixels[y * w + srcr.w] = pixels[y * w + srcr.w - 1];
-    }
-    if (srcr.h < image->h)
-    {
-        for (x = 0; x < srcr.w; ++x)
-            pixels[srcr.h * w + x] = pixels[(srcr.h - 1) * w + x];
-    }
-    if (srcr.w < image->w && srcr.h < image->h)
-        pixels[srcr.h * w + srcr.w] = pixels[(srcr.h - 1) * w + srcr.w - 1];
+	// if rect is smaller than texture, copy rightmost/bottom col/row (and pixel at w,h)
+	// as is from the inner one so that linear sampling works like clamp_to_edge
+	if (srcr.w < image->w)
+	{
+		for (y = 0; y < srcr.h; ++y)
+			pixels[y * w + srcr.w] = pixels[y * w + srcr.w - 1];
+	}
+	if (srcr.h < image->h)
+	{
+		for (x = 0; x < srcr.w; ++x)
+			pixels[srcr.h * w + x] = pixels[(srcr.h - 1) * w + x];
+	}
+	if (srcr.w < image->w && srcr.h < image->h)
+		pixels[srcr.h * w + srcr.w] = pixels[(srcr.h - 1) * w + srcr.w - 1];
 
-    SDL_UnlockSurface(image);
+	SDL_UnlockSurface(image);
 }
 
 static inline unsigned long sNextPowerOfTwo(unsigned long input)
 {
-     --input;
-     input |= input >> 16;
-     input |= input >> 8;
-     input |= input >> 4;
-     input |= input >> 2;
-     input |= input >> 1;
-     return input + 1;
+	--input;
+	input |= input >> 16;
+	input |= input >> 8;
+	input |= input >> 4;
+	input |= input >> 2;
+	input |= input >> 1;
+	return input + 1;
 }
 
 //! Loads and constructs an Image from given SDL_RWops object.
@@ -117,7 +117,7 @@ static inline unsigned long sNextPowerOfTwo(unsigned long input)
  */
 static SDL_Surface * LoadSurface(SDL_RWops *source, bool deleteSource)
 {
-    return IMG_Load_RW(source, deleteSource ? 1 : 0);
+	return IMG_Load_RW(source, deleteSource ? 1 : 0);
 }
 
 //! Constructs an Image from given SDL_Surface.
@@ -131,10 +131,10 @@ static SDL_Surface * LoadSurface(SDL_RWops *source, bool deleteSource)
 
 static SDL_Surface *LoadSurface(const char *fileName)
 {
-    SDL_RWops *rw = SDL_RWFromFile(fileName, "rb");
-    if (rw == 0)
-        return 0;
-    return LoadSurface(rw, true);
+	SDL_RWops *rw = SDL_RWFromFile(fileName, "rb");
+	if (rw == 0)
+		return 0;
+	return LoadSurface(rw, true);
 }
 
 
@@ -247,59 +247,59 @@ static bool CreateTexture(unsigned long &oTexture, float *oUV,
 
 static bool CreateImage(Texture *txt, SDL_Surface *surface, PixelRectangle *sourceRect = 0)
 {
-    bool success;
-    unsigned long texture;
-    float uv[4];
+	bool success;
+	unsigned long texture;
+	float uv[4];
 
-    if (surface == 0)
-        return false;
+	if (surface == 0)
+		return false;
 
-    success = CreateTexture(texture, uv, surface, sourceRect);
-    if (!success)
-        return false;
+	success = CreateTexture(texture, uv, surface, sourceRect);
+	if (!success)
+		return false;
 
 
 
-    if (sourceRect == 0)
-        txt->Create(surface->w, surface->h, texture, uv);
-    else
-        txt->Create(sourceRect->width, sourceRect->height, texture, uv);
+	if (sourceRect == 0)
+		txt->Create(surface->w, surface->h, texture, uv);
+	else
+		txt->Create(sourceRect->width, sourceRect->height, texture, uv);
 	return true;
 }
 
 static bool LoadImage(Texture *txt, SDL_RWops *source, bool deleteSource)
 {
-    SDL_Surface *surface;
+	SDL_Surface *surface;
 
-    surface = LoadSurface(source, deleteSource);
-    if (surface == 0)
-        return false;
+	surface = LoadSurface(source, deleteSource);
+	if (surface == 0)
+		return false;
 
-    CreateImage(txt, surface);
-    SDL_FreeSurface(surface);
+	CreateImage(txt, surface);
+	SDL_FreeSurface(surface);
 
-    return true;
+	return true;
 }
 
 Texture::Texture(const char *fileName)
 {
-    SDL_RWops *rw = SDL_RWFromFile(fileName, "rb");
-    if (rw == 0)
+	SDL_RWops *rw = SDL_RWFromFile(fileName, "rb");
+	if (rw == 0)
 	{
 		loaded = false;
-        return;
+		return;
 	}
 
-    loaded = LoadImage(this, rw, true);
+	loaded = LoadImage(this, rw, true);
 }
 
 Texture::Texture(const char *data, unsigned int size)
 {
 	SDL_RWops *rw = SDL_RWFromMem((void*)data, size);
-    if (rw == 0)
+	if (rw == 0)
 	{
 		loaded = false;
-        return;
+		return;
 	}
 	loaded = LoadImage(this, rw, true);
 

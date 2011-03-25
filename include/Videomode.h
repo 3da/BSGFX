@@ -25,10 +25,18 @@ public:
 
 	bool Initialize(const char *caption);
 
-	unsigned int GetWidth() const {return width;}
-	unsigned int GetHeight() const {return height;}
-	unsigned int GetDepth() const {return depth;}
-	bool IsFullscreen() const {return fullscreen;}
+	unsigned int GetWidth() const {
+		return width;
+	}
+	unsigned int GetHeight() const {
+		return height;
+	}
+	unsigned int GetDepth() const {
+		return depth;
+	}
+	bool IsFullscreen() const {
+		return fullscreen;
+	}
 
 
 protected:
