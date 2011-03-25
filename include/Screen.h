@@ -12,9 +12,9 @@ class Screen
 {
 public:
 	static bool Initialize(unsigned int width, unsigned int height,
-							unsigned int depth,
-							bool fullscreen,
-							const char *caption);
+							unsigned int depth = 0,
+							bool fullscreen = false,
+							const char *caption = "Window");
 
 	static const Videomode GetVideomode() {return videomode;}
 

@@ -37,6 +37,7 @@ bool Screen::Initialize(unsigned int width, unsigned int height,
 		Screen::caption = caption;
 		return true;
 	}
+	return false;
 }
 
 bool Screen::SetupOpengl(unsigned int width, unsigned int height)
