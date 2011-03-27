@@ -245,67 +245,61 @@ static bool CreateTexture(unsigned long &oTexture, float *oUV,
 	return true;
 }
 
-static bool CreateImage(Texture *txt, SDL_Surface *surface, PixelRectangle *sourceRect = 0)
+static Texture *CreateImage(SDL_Surface *surface, PixelRectangle *sourceRect = 0)
 {
 	bool success;
 	unsigned long texture;
 	float uv[4];
 
+
 	if (surface == 0)
-		return false;
+		return 0;
 
 	success = CreateTexture(texture, uv, surface, sourceRect);
 	if (!success)
-		return false;
+		return 0;
 
 
 
 	if (sourceRect == 0)
-		txt->Create(surface->w, surface->h, texture, uv);
+		return new Texture(surface->w, surface->h, texture, uv);
 	else
-		txt->Create(sourceRect->width, sourceRect->height, texture, uv);
-	return true;
+		return new Texture(sourceRect->width, sourceRect->height, texture, uv);
 }
 
-static bool LoadImage(Texture *txt, SDL_RWops *source, bool deleteSource)
+static Texture *LoadImage(SDL_RWops *source, bool deleteSource)
 {
 	SDL_Surface *surface;
 
 	surface = LoadSurface(source, deleteSource);
 	if (surface == 0)
-		return false;
+		return 0;
 
-	CreateImage(txt, surface);
+	Texture *txt = CreateImage(surface);
 	SDL_FreeSurface(surface);
 
-	return true;
+	return txt;
 }
 
-Texture::Texture(const char *fileName)
+Texture *Texture::Load(const char *fileName)
 {
 	SDL_RWops *rw = SDL_RWFromFile(fileName, "rb");
 	if (rw == 0)
-	{
-		loaded = false;
-		return;
-	}
+		return 0;
 
-	loaded = LoadImage(this, rw, true);
+	return LoadImage(rw, true);
 }
 
-Texture::Texture(const char *data, unsigned int size)
+Texture *Texture::Load(const char *data, unsigned int size)
 {
 	SDL_RWops *rw = SDL_RWFromMem((void*)data, size);
 	if (rw == 0)
-	{
-		loaded = false;
-		return;
-	}
-	loaded = LoadImage(this, rw, true);
+		return 0;
+	return LoadImage(rw, true);
 
 }
 
-void Texture::Create(unsigned int w, unsigned int h, unsigned int i, float _uv[])
+Texture::Texture(unsigned int w, unsigned int h, unsigned int i, float _uv[])
 {
 	width = w;
 	height = h;

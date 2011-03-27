@@ -31,14 +31,14 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add directory="..\include" />
-			<Add directory="..\Tools\SDL-1.2.14\include\SDL" />
+			<Add directory="..\dependences\SDL-1.2.14\include\SDL" />
 		</Compiler>
 		<Linker>
 			<Add library="BSGFX_d" />
 			<Add library="opengl32" />
 			<Add library="SDL" />
 			<Add directory="..\bin" />
-			<Add directory="..\Tools\SDL-1.2.14\lib" />
+			<Add directory="..\dependences\SDL-1.2.14\lib" />
 		</Linker>
 		<Unit filename="main.cpp" />
 		<Extensions>

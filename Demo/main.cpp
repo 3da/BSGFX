@@ -22,8 +22,8 @@ int main(int argc, char *argv[])
 	BSGFX::Screen::Initialize(640, 480, 32, false, "window");
 	BSGFX::Drawing::InitializeCircle(32);
 
-	txt = new BSGFX::Texture("Plane1.png");
-	if (!txt->IsLoaded())
+	txt = BSGFX::Texture::Load("Plane1.png");
+	if (!txt)
 		exit(1);
 	BSGFX::Drawing::Color(1,1,1,1);
 	BSGFX::Drawing::ClearColor(1, 1, 1);

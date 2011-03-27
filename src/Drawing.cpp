@@ -168,12 +168,9 @@ void Drawing::Sprite()
 {
 	if (!spriteLogo)
 	{
-		spriteLogo = new Texture((char*)SPRITE_LOGO, SPRITE_LOGO_LEN);
-		if (!spriteLogo->IsLoaded())
-		{
-			spriteLogo = 0;
+		spriteLogo = Texture::Load((char*)SPRITE_LOGO, SPRITE_LOGO_LEN);
+		if (!spriteLogo)
 			return;
-		}
 	}
 	Videomode mode = Screen::GetVideomode();
 	Rect(0,0,mode.GetWidth(), mode.GetHeight(), A_TOP_LEFT, 0, spriteLogo);

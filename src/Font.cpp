@@ -538,7 +538,7 @@ bool Font::Reload()
 	// Try to load images
 	for (a = 0; a < mFontData.common.pages; ++a)
 	{
-		mFontData.pages[a].fontImage = new Texture(mFontData.pages[0].file);
+		mFontData.pages[a].fontImage = Texture::Load(mFontData.pages[0].file);
 		if (mFontData.pages[a].fontImage == 0)
 		{
 			// failed - try to load it relatively at the same path as the description file
@@ -553,7 +553,7 @@ bool Font::Reload()
 				dir[len] = 0;
 				char fullpath[256] = { 0 };
 				snprintf(fullpath, 255, "%s%s", dir, mFontData.pages[a].file);
-				mFontData.pages[a].fontImage = new Texture(fullpath);
+				mFontData.pages[a].fontImage = Texture::Load(fullpath);
 				if (mFontData.pages[a].fontImage == 0)
 					return false;
 			}
