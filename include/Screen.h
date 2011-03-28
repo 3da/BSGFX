@@ -14,7 +14,7 @@ public:
 	static bool Initialize(unsigned int width, unsigned int height,
 						   unsigned int depth = 0,
 						   bool fullscreen = false,
-						   const char *caption = "Window");
+						   const char *caption = "Window", bool vsync = true);
 
 	static const Videomode GetVideomode() {
 		return videomode;

@@ -13,7 +13,7 @@ std::string Screen::caption;
 bool Screen::Initialize(unsigned int width, unsigned int height,
 						unsigned int depth,
 						bool fullscreen,
-						const char *caption)
+						const char *caption, bool vsync)
 {
 	Screen::videomode = Videomode();
 	Screen::caption.clear();
@@ -24,6 +24,8 @@ bool Screen::Initialize(unsigned int width, unsigned int height,
 	//SDL_ShowCursor(false);
 
 	SDL_WM_SetCaption(caption, caption);
+
+	SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, (vsync)?1:0);
 
 	if (SDL_SetVideoMode(width, height, depth, flags) == 0)
 	{
