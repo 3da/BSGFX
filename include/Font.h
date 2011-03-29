@@ -133,6 +133,8 @@ public:
 	Font(const char *descriptionFile);
 	~Font();
 
+	static Font *Load(const char *descriptionFile);
+
 	// From Font:
 
 	bool Init();

@@ -268,6 +268,17 @@ Font::Font(const char *descriptionFile)
 	mSpacing = 0;
 }
 
+Font *Font::Load(const char *descriptionFile)
+{
+	Font *font = new Font(descriptionFile);
+	if (!font->Init())
+	{
+		delete font;
+		font = 0;
+	}
+	return font;
+}
+
 
 
 static char sGetEscapedChar(char successor)

@@ -28,8 +28,8 @@ int main(int argc, char *argv[])
 	BSGFX::Drawing::Color(1,1,1,1);
 	BSGFX::Drawing::ClearColor(1, 1, 1);
 
-	font = new BSGFX::Font("font.fnt");
-	if (!font->Init())
+	font = BSGFX::Font::Load("font.fnt");
+	if (!font)
 		exit(1);
 
 
