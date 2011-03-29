@@ -1,7 +1,7 @@
 #ifndef VIDEOMODE_H_INCLUDED
 #define VIDEOMODE_H_INCLUDED
 
-
+#include <vector>
 
 namespace BSGFX
 {
@@ -37,6 +37,8 @@ public:
 	bool IsFullscreen() const {
 		return fullscreen;
 	}
+
+	static std::vector<Videomode> GetAvaible();
 
 
 protected:
