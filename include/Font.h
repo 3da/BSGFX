@@ -130,15 +130,7 @@ public:
 		Char *chars;
 	};
 
-	Font(const char *descriptionFile);
-	~Font();
-
 	static Font *Load(const char *descriptionFile);
-
-	// From Font:
-
-	bool Init();
-	bool Reload();
 
 	void SetCharacterSpacing(long spacing) {
 		mSpacing = spacing;
@@ -160,11 +152,6 @@ public:
 
 
 
-
-	bool IsLoaded() const {
-		return mLoaded;
-	}
-
 	long GetStringMetrics(unsigned int &oWidth, unsigned int &oHeight, const wchar_t *string,
 						  float scale = 1, unsigned int wrapAreaWidth = 0, unsigned long substrLength = 0);
 
@@ -172,6 +159,11 @@ public:
 				  unsigned long flags = A_TOP_LEFT, float scale = 1, unsigned int wrapAreaWidth = 0, unsigned long substrLength = 0);
 
 protected:
+
+	Font(const char *descriptionFile);
+	~Font();
+	bool Init();
+	bool Reload();
 
 	bool mLoaded;
 	unsigned long mFlags;
