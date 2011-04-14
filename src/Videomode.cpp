@@ -1,6 +1,6 @@
-#include "Videomode.h"
+#include "BSGFX/Videomode.h"
 
-#include "Screen.h"
+#include "BSGFX/Screen.h"
 
 #include <SDL.h>
 

@@ -2,9 +2,9 @@
 #include <SDL.h>
 #include <cmath>
 
-#include "Drawing.h"
-#include "Videomode.h"
-#include "Screen.h"
+#include "BSGFX/Drawing.h"
+#include "BSGFX/Videomode.h"
+#include "BSGFX/Screen.h"
 
 #include "bin/spriteLogo.h"
 

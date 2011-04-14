@@ -1,6 +1,6 @@
-#include "Font.h"
+#include "BSGFX/Font.h"
 
-#include "Drawing.h"
+#include "BSGFX/Drawing.h"
 
 #include <cstdlib>
 #include <cstring>

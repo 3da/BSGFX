@@ -1,4 +1,4 @@
-#include "Screen.h"
+#include "BSGFX/Screen.h"
 
 #include <SDL.h>
 #include <GL/GL.h>
